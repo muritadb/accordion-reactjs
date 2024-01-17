@@ -19,26 +19,41 @@ const faqs = [
   },
 ]
 
-const Item = ({ title, answer, i }) => (
-  <li className="item">
-    <p className="number">{i + 1}</p>
-    <h2 className="title">{title}</h2>
-    <p className="icon">-</p>
-    <div className="content-box">{answer}</div>
-  </li>
-)
+const Item = ({ title, answer, index, onClickItem, activeIndex }) => {
+  const active = index === activeIndex
 
-// const [faqOpen, setFaqOpen] = useState(null)
+  return (
+    <li
+      className={`item ${active ? "active" : ""}`}
+      onClick={() => onClickItem(index)}
+    >
+      <p className="number">{index + 1}</p>
+      <h2 className="title">{title}</h2>
+      <p className="icon">{active ? "-" : "+"}</p>
+      {active && <div className="content-box">{answer}</div>}
+    </li>
+  )
+}
 
 const App = () => {
+  const [activeIndex, setActiveIndex] = useState(null)
+
+  const handleClick = (index) =>
+    setActiveIndex((a) => (a === index ? null : index))
+
   return (
-    <div>
-      <div className="accordion">
-        {faqs.map((faq, i) => (
-          <Item key={faq.id} title={faq.title} answer={faq.answer} i={i} onClick={() => console.log('oi casd')} />
-        ))}
-      </div>
-    </div>
+    <ul className="accordion">
+      {faqs.map((faq, index) => (
+        <Item
+          key={faq.id}
+          title={faq.title}
+          answer={faq.answer}
+          index={index}
+          onClickItem={handleClick}
+          activeIndex={activeIndex}
+        />
+      ))}
+    </ul>
   )
 }
 
