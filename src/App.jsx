@@ -1,3 +1,4 @@
+import { useState } from "react"
 import "./css/accordion.css"
 
 const faqs = [
@@ -27,12 +28,14 @@ const Item = ({ title, answer, i }) => (
   </li>
 )
 
+// const [faqOpen, setFaqOpen] = useState(null)
+
 const App = () => {
   return (
     <div>
       <div className="accordion">
         {faqs.map((faq, i) => (
-          <Item key={faq.id} title={faq.title} answer={faq.answer} i={i} />
+          <Item key={faq.id} title={faq.title} answer={faq.answer} i={i} onClick={() => console.log('oi casd')} />
         ))}
       </div>
     </div>
